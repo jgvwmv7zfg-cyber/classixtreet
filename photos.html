@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Пришлите фото в вещах CLASSIXTREET — опубликуем в разделе «Как носят».">
+<title>Прислать фото — CLASSIXTREET</title>
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="photos">
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>CLASSIXTREET</a>
+    <nav class="nav">
+      <a href="catalog.html">Каталог</a>
+      <a href="about.html">История</a>
+      <a href="index.html#worn">Как носят</a>
+      <a href="index.html#faq">Вопросы</a>
+    </nav>
+    <a class="btn btn--red" href="index.html#order">Написать в Telegram</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="pagehead wrap">
+    <p class="mono pagehead__eyebrow">Ваши фото</p>
+    <h1>Покажите,<br>как носите</h1>
+    <p>Снимки покупателей мы публикуем на главной, в разделе «Как носят». С вашим ником, если захотите.</p>
+  </section>
+
+  <section class="section wrap">
+    <div class="upload" id="upload">
+
+      <form class="upload__form" id="photo-form" novalidate>
+
+        <!-- зона выбора файлов -->
+        <div class="drop" id="drop" tabindex="0" role="button" aria-label="Выбрать фотографии">
+          <span class="drop__plus" aria-hidden="true">+</span>
+          <span class="drop__title">Перетащите фото сюда</span>
+          <span class="mono drop__note">или нажмите, чтобы выбрать на устройстве</span>
+          <input type="file" id="files" accept="image/*" multiple hidden>
+        </div>
+
+        <p class="mono upload__limits" id="limits">До 8 фотографий, каждая не больше 10 МБ</p>
+
+        <div class="previews" id="previews"></div>
+
+        <div class="field-row">
+          <fieldset class="field">
+            <label class="mono" for="p-name">Как вас подписать</label>
+            <input id="p-name" name="pname" type="text" placeholder="@nickname или имя">
+          </fieldset>
+
+          <fieldset class="field">
+            <label class="mono" for="p-item">Что на вас надето</label>
+            <select id="p-item" name="pitem"></select>
+          </fieldset>
+        </div>
+
+        <fieldset class="field">
+          <label class="mono" for="p-note">Пара слов</label>
+          <textarea id="p-note" name="pnote" rows="3" placeholder="Необязательно"></textarea>
+        </fieldset>
+
+        <label class="agree">
+          <input type="checkbox" id="p-agree" required>
+          <span>Разрешаю опубликовать эти фотографии на сайте и в соцсетях бренда</span>
+        </label>
+
+        <p class="formerror" id="photo-error" hidden></p>
+
+        <button type="submit" class="btn btn--red btn--big checkout__submit">Отправить фото</button>
+        <p class="mono checkout__hint" id="photo-hint"></p>
+
+        <!-- запасной вариант: показать текст сообщения -->
+        <div class="fallback" id="photo-fallback" hidden>
+          <p class="mono">Скопируйте текст, откройте наш Telegram и отправьте его вместе с фотографиями:</p>
+          <textarea id="photo-fbtext" rows="8" readonly></textarea>
+          <button type="button" class="btn btn--ghost" id="photo-copy">Скопировать</button>
+        </div>
+
+      </form>
+
+      <aside class="upload__side">
+        <h2 class="checkout__title">Как это работает</h2>
+        <ol class="howto">
+          <li><b>Выбираете фото</b><span>Они остаются у вас на устройстве, никуда не уходят до нажатия кнопки.</span></li>
+          <li><b>Нажимаете «Отправить»</b><span>Откроется наш чат в Telegram с готовым сообщением.</span></li>
+          <li><b>Прикрепляете снимки</b><span>В чате, кнопкой скрепки. Так фото приходят нам в исходном качестве.</span></li>
+          <li><b>Публикуем</b><span>Обычно в течение пары дней. Если передумаете — напишите, снимем.</span></li>
+        </ol>
+        <p class="note">Мы не публикуем фото без вашего разрешения и не передаём их третьим лицам. Попросите удалить — удалим без вопросов.</p>
+      </aside>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <div class="foot__brand"><span class="mark mark--lg" aria-hidden="true"></span>CLASSIXTREET<em>.</em></div>
+        <p class="mono" style="color:var(--band-soft);margin:.7rem 0 0">Челябинск</p>
+      </div>
+      <div class="foot__links">
+        <a href="#">Telegram</a>
+        <a href="#">ВКонтакте</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+    <p class="foot__legal">Заполнить перед публикацией: ИП / самозанятость, ИНН, публичная оферта, политика обработки персональных данных.</p>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/upload.js"></script>
+</body>
+</html>

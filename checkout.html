@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="Оформление заказа CLASSIXTREET.">
+<title>Оформление заказа — CLASSIXTREET</title>
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="checkout">
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>CLASSIXTREET</a>
+    <nav class="nav">
+      <a href="catalog.html">Каталог</a>
+      <a href="about.html">История</a>
+      <a href="index.html#sizes">Размеры</a>
+      <a href="index.html#faq">Вопросы</a>
+    </nav>
+    <a class="btn btn--red" href="index.html#order">Написать в Telegram</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="pagehead wrap">
+    <p class="mono pagehead__eyebrow">Оформление</p>
+    <h1>Заказ</h1>
+    <p>Заполните данные — заказ уйдёт нам в Telegram готовым сообщением. Мы подтвердим наличие, посчитаем доставку и пришлём реквизиты для оплаты.</p>
+  </section>
+
+  <section class="section wrap">
+    <div class="checkout" id="checkout">
+
+      <!-- левая половина: данные покупателя -->
+      <form class="checkout__form" id="order-form" novalidate>
+
+        <div class="field-row">
+          <fieldset class="field">
+            <label class="mono" for="f-firstname">Имя</label>
+            <input id="f-firstname" name="firstname" type="text" autocomplete="given-name" required>
+          </fieldset>
+
+          <fieldset class="field">
+            <label class="mono" for="f-lastname">Фамилия</label>
+            <input id="f-lastname" name="lastname" type="text" autocomplete="family-name" required>
+          </fieldset>
+        </div>
+
+        <fieldset class="field">
+          <label class="mono" for="f-phone">Номер телефона</label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" required>
+        </fieldset>
+
+        <fieldset class="field">
+          <label class="mono" for="f-city">Город</label>
+          <input id="f-city" name="city" type="text" autocomplete="address-level2" required>
+        </fieldset>
+
+        <fieldset class="field">
+          <label class="mono" for="f-contact">Telegram или ссылка на соцсеть</label>
+          <input id="f-contact" name="contact" type="text" placeholder="@nickname или ссылка на ВК" required>
+          <span class="field__note mono">Сюда напишем о заказе и пришлём реквизиты</span>
+        </fieldset>
+
+        <fieldset class="field">
+          <span class="mono field__label">Доставка</span>
+          <div class="delivery" id="delivery"></div>
+        </fieldset>
+
+        <!-- карта пунктов выдачи: появляется, когда введён город -->
+        <div class="pvz" id="pvz" hidden>
+          <div class="pvz__head">
+            <span class="mono pvz__title" id="pvz-title">Пункты выдачи</span>
+            <a class="mono pvz__link" id="pvz-link" href="#" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>
+          </div>
+          <div class="pvz__frame">
+            <iframe id="pvz-map" title="Карта пунктов выдачи" loading="lazy" allowfullscreen></iframe>
+            <div id="pvz-live" hidden></div>
+          </div>
+          <p class="mono pvz__hint" id="pvz-hint">Найдите удобный пункт и впишите его адрес в поле ниже</p>
+        </div>
+
+        <fieldset class="field">
+          <label class="mono" for="f-address">Адрес или пункт выдачи</label>
+          <input id="f-address" name="address" type="text" autocomplete="street-address">
+        </fieldset>
+
+        <fieldset class="field">
+          <label class="mono" for="f-note">Комментарий</label>
+          <textarea id="f-note" name="note" rows="3" placeholder="Что-то, что нам стоит знать"></textarea>
+        </fieldset>
+
+        <label class="agree">
+          <input type="checkbox" id="f-agree" required>
+          <span>Согласен на обработку персональных данных <a href="#" class="agree__link">(политика)</a></span>
+        </label>
+
+        <p class="formerror" id="form-error" hidden></p>
+
+        <button type="submit" class="btn btn--red btn--big checkout__submit">Отправить заказ</button>
+
+        <p class="mono checkout__hint" id="checkout-hint"></p>
+
+        <!-- запасной вариант, если ник в Telegram не задан -->
+        <div class="fallback" id="fallback" hidden>
+          <p class="mono">Скопируйте текст заказа и отправьте нам в Telegram или ВКонтакте:</p>
+          <textarea id="fallback-text" rows="12" readonly></textarea>
+          <button type="button" class="btn btn--ghost" id="copy-btn">Скопировать</button>
+        </div>
+
+      </form>
+
+      <!-- правая половина: состав заказа -->
+      <aside class="checkout__summary">
+        <h2 class="checkout__title">Ваш заказ</h2>
+        <div id="checkout-items"></div>
+        <div class="checkout__total" id="checkout-total"></div>
+        <p class="note">Доставка считается отдельно, после подтверждения наличия. Оплата — переводом по реквизитам, которые пришлём в ответ.</p>
+        <a class="btn btn--ghost" href="catalog.html">Добавить ещё</a>
+      </aside>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <div class="foot__brand"><span class="mark mark--lg" aria-hidden="true"></span>CLASSIXTREET<em>.</em></div>
+        <p class="mono" style="color:var(--band-soft);margin:.7rem 0 0">Челябинск</p>
+      </div>
+      <div class="foot__links">
+        <a href="#">Telegram</a>
+        <a href="#">ВКонтакте</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+    <p class="foot__legal">Заполнить перед публикацией: ИП / самозанятость, ИНН, публичная оферта, политика обработки персональных данных.</p>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/checkout.js"></script>
+</body>
+</html>

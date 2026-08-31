@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Полный каталог CLASSIXTREET: футболки, худи, зип-худи, костюмы. Фильтр по категориям и коллекциям.">
+<title>Каталог — CLASSIXTREET</title>
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="catalog">
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>CLASSIXTREET</a>
+    <nav class="nav">
+      <a href="catalog.html" aria-current="page">Каталог</a>
+      <a href="about.html">История</a>
+      <a href="index.html#sizes">Размеры</a>
+      <a href="index.html#order">Как заказать</a>
+      <a href="index.html#faq">Вопросы</a>
+    </nav>
+    <a class="btn btn--red" href="index.html#order">Написать в Telegram</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="pagehead wrap">
+    <p class="mono pagehead__eyebrow">Каталог</p>
+    <h1>Весь<br>ассортимент</h1>
+    <p>Всё, что есть в наличии. Фильтруйте по типу вещи или по коллекции. Размеры сверяйте с таблицей на главной.</p>
+  </section>
+
+  <section class="section wrap">
+
+    <!-- Кнопки строятся автоматически из CATEGORIES и COLLECTIONS в js/products.js -->
+    <div class="filterbar">
+      <div class="filterbar__row">
+        <span class="filterbar__label">Позиции</span>
+        <div class="filters" id="filter-cat" role="group" aria-label="Категория"></div>
+      </div>
+      <div class="filterbar__row">
+        <span class="filterbar__label">Коллекции</span>
+        <div class="filters" id="filter-col" role="group" aria-label="Коллекция"></div>
+      </div>
+    </div>
+
+    <div class="results">
+      <span class="results__count" id="count" aria-live="polite"></span>
+      <button type="button" class="results__reset" id="reset" hidden>Сбросить фильтры</button>
+    </div>
+
+    <div class="grid" id="grid-all"></div>
+    <p class="empty" id="empty" hidden>В этой коллекции пока нет таких вещей</p>
+
+  </section>
+
+  <section class="orderband">
+    <div class="wrap">
+      <div class="section__head">
+        <h2>Не нашли размер?</h2>
+        <span class="mono">Лист ожидания</span>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step__n">01</span>
+          <h3>Напишите модель</h3>
+          <p>Название вещи и нужный размер. Если размер спорный — рост и обычный размер футболки.</p>
+        </div>
+        <div class="step">
+          <span class="step__n">02</span>
+          <h3>Ставим в очередь</h3>
+          <p>Записываем и не теряем. Ничего платить сейчас не нужно.</p>
+        </div>
+        <div class="step">
+          <span class="step__n">03</span>
+          <h3>Сообщаем о партии</h3>
+          <p>Как только приходит пошив — пишем первыми, до публикации в канале.</p>
+        </div>
+      </div>
+      <div class="orderband__cta">
+        <a class="btn" href="index.html#order">Написать в Telegram</a>
+        <span class="mono" style="color:var(--band-soft)">Заполнить: ссылка на телеграм</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <div class="foot__brand"><span class="mark mark--lg" aria-hidden="true"></span>CLASSIXTREET<em>.</em></div>
+        <p class="mono" style="color:var(--band-soft);margin:.7rem 0 0">Челябинск</p>
+      </div>
+      <div class="foot__links">
+        <a href="#">Telegram</a>
+        <a href="#">ВКонтакте</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+    <p class="foot__legal">Заполнить перед публикацией: ИП / самозанятость, ИНН, публичная оферта, политика обработки персональных данных.</p>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>

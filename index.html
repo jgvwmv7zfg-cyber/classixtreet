@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="CLASSIXTREET — streetwear-бренд: футболки, худи, зип-худи и костюмы. Каталог, размерная сетка, заказ в Telegram.">
+<title>CLASSIXTREET</title>
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Marck+Script&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span>CLASSIXTREET</a>
+    <nav class="nav">
+      <a href="catalog.html">Каталог</a>
+      <a href="about.html">История</a>
+      <a href="#sizes">Размеры</a>
+      <a href="#order">Как заказать</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <a class="btn btn--red" href="#order">Написать в Telegram</a>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span>Новая партия<i>///</i>Размеры заканчиваются<i>///</i>Отправка по России<i>///</i>Шьём партиями<i>///</i>Новая партия<i>///</i>Размеры заканчиваются<i>///</i>Отправка по России<i>///</i>Шьём партиями<i>///</i></span>
+    <span>Новая партия<i>///</i>Размеры заканчиваются<i>///</i>Отправка по России<i>///</i>Шьём партиями<i>///</i>Новая партия<i>///</i>Размеры заканчиваются<i>///</i>Отправка по России<i>///</i>Шьём партиями<i>///</i></span>
+  </div>
+</div>
+
+<main id="top">
+
+  <section class="hero wrap">
+    <p class="mono hero__eyebrow">Челябинск</p>
+    <h1>Классика<br>в сердце.<br><em>Улица в крови.</em></h1>
+    <p class="hero__script">Стиль — в тебе</p>
+    <p class="hero__lede">Город, где заводы соседствуют с парками, а строгие памятники — с яркими граффити. Бренд вырос из прогулок по нему.</p>
+    <div class="hero__actions">
+      <a class="btn" href="catalog.html">Смотреть каталог</a>
+      <a class="btn btn--ghost" href="#order">Как заказать</a>
+    </div>
+  </section>
+
+  <!-- Два смысла названия -->
+  <section class="duo">
+    <div class="duo__half duo__half--ink">
+      <h2 class="duo__word">Классика</h2>
+      <p>Вечные ценности, качество, то, что не стареет. Основа и фундамент.</p>
+    </div>
+    <div class="duo__half duo__half--red">
+      <h2 class="duo__word">Улица</h2>
+      <p>Свобода, самовыражение, драйв. Возможность быть собой и не следовать слепо моде.</p>
+    </div>
+  </section>
+
+  <!-- Афиша: объявления берутся из js/news.js -->
+  <section class="section wrap" id="news-section">
+    <div class="section__head">
+      <h2>Афиша</h2>
+      <span class="mono">Что нового</span>
+    </div>
+    <div id="news"></div>
+  </section>
+
+  <!-- Витрина: показываются товары с top: true в js/products.js -->
+  <section class="section wrap" id="catalog">
+    <div class="section__head">
+      <h2>Витрина</h2>
+      <span class="mono">Что берут чаще</span>
+    </div>
+
+    <div class="grid" id="grid-top"></div>
+
+    <div class="catalog-cta">
+      <p>Это не всё, что есть</p>
+      <a class="btn btn--red btn--big" href="catalog.html">Смотреть весь каталог</a>
+    </div>
+  </section>
+
+  <section class="section wrap" id="story">
+    <div class="section__head">
+      <h2>История</h2>
+      <span class="mono">Откуда всё это</span>
+    </div>
+    <div class="teaser">
+      <p class="teaser__quote">Всё началось<br>с <em>прогулок</em></p>
+      <div class="teaser__body">
+        <p>Я просто ходил по улицам и наблюдал. В центре — деловые костюмы, спешка, ритм жизни. На окраинах — расслабленные компании, скейтеры, музыка из открытых окон.</p>
+        <p>В этих контрастах я видел энергию и свободу. И однажды понял, что хочу это передать — не рассказать, а дать почувствовать через одежду.</p>
+        <a class="btn btn--ghost" href="about.html">Читать целиком</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       РАЗМЕРЫ. Четыре таблицы, переключаются кнопками.
+       Кнопка и таблица связаны через data-size / data-panel.
+       ============================================================ -->
+  <section class="section wrap" id="sizes">
+    <div class="section__head">
+      <h2>Размеры</h2>
+      <span class="mono">Замеры по изделию, см</span>
+    </div>
+
+    <div class="filters" id="sizetabs" role="group" aria-label="Тип изделия" style="margin-bottom:1.6rem">
+      <button type="button" data-size="tee"    aria-controls="size-tee"    aria-pressed="true">Футболки</button>
+      <button type="button" data-size="hoodie" aria-controls="size-hoodie" aria-pressed="false">Худи и зип-худи</button>
+      <button type="button" data-size="suit"   aria-controls="size-suit"   aria-pressed="false">Костюмы</button>
+      <button type="button" data-size="pants"  aria-controls="size-pants"  aria-pressed="false">Штаны</button>
+    </div>
+
+    <div class="sizeblock" id="size-tee" data-panel="tee">
+
+      <figure class="sizeblock__fig">
+        <svg viewBox="-16 -16 352 352" role="img" aria-label="Схема замеров футболки: A — длина изделия, B — ширина изделия, C — ширина плеча, D — длина рукава">
+          <defs>
+            <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path class="arrowhead" d="M0,0 L10,5 L0,10 z"/>
+            </marker>
+          </defs>
+
+          <!-- силуэт -->
+          <path class="tee" d="M108,42 C126,68 194,68 212,42 L250,54 L296,104 L262,146 L240,128 L240,286 L80,286 L80,128 L58,146 L24,104 L70,54 Z"/>
+
+          <!-- размерные линии -->
+          <g class="dim">
+            <line x1="100" y1="58" x2="100" y2="282" marker-start="url(#ar)" marker-end="url(#ar)"/>
+            <line x1="86"  y1="248" x2="234" y2="248" marker-start="url(#ar)" marker-end="url(#ar)"/>
+            <line x1="214" y1="50"  x2="248" y2="60"  marker-start="url(#ar)" marker-end="url(#ar)"/>
+            <line x1="256" y1="62"  x2="284" y2="118" marker-start="url(#ar)" marker-end="url(#ar)"/>
+          </g>
+
+          <!-- буквы -->
+          <g class="lab">
+            <circle cx="100" cy="170" r="15"/><text x="100" y="170">A</text>
+            <circle cx="160" cy="248" r="15"/><text x="160" y="248">B</text>
+            <circle cx="231" cy="34"  r="15"/><text x="231" y="34">C</text>
+            <circle cx="292" cy="88"  r="15"/><text x="292" y="88">D</text>
+          </g>
+        </svg>
+        <figcaption class="mono">Замеры по изделию, разложенному на плоскости</figcaption>
+      </figure>
+
+      <div class="tablewrap" data-sizetable="tee"></div>
+
+    </div>
+
+    <div class="sizeblock" id="size-hoodie" data-panel="hoodie" hidden>
+
+      <figure class="sizeblock__fig">
+        <svg viewBox="-16 -16 352 352" role="img" aria-label="Схема замеров худи: A — длина изделия, B — ширина изделия, C — ширина плеча, D — длина рукава">
+          <defs>
+            <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path class="arrowhead" d="M0,0 L10,5 L0,10 z"/>
+            </marker>
+          </defs>
+          <!-- капюшон: трапеция со скруглённым верхом, а не купол -->
+          <path class="tee" d="M106,80 L100,48 Q100,26 122,24 L198,24 Q220,26 220,48 L214,80"/>
+          <!-- край капюшона -->
+          <path class="tee thin" d="M116,80 L111,52 Q111,34 128,32 L192,32 Q209,34 209,52 L204,80"/>
+
+          <!-- корпус и рукава одним контуром -->
+          <path class="tee" d="M106,80 L74,86 L26,196 L22,214 L62,232 L88,150 L88,288 L232,288 L232,150 L258,232 L298,214 L294,196 L246,86 L214,80"/>
+
+          <!-- горловина -->
+          <path class="tee thin" d="M106,80 Q160,100 214,80"/>
+          <!-- шнурки с наконечниками -->
+          <path class="tee thin" d="M142,96 L139,134 M178,96 L181,134"/>
+          <path class="tee thin" d="M136,134 L142,134 M178,134 L184,134"/>
+          <!-- манжеты -->
+          <path class="tee thin" d="M36,208 L74,226 M284,208 L246,226"/>
+          <!-- резинка низа -->
+          <path class="tee thin" d="M88,270 L232,270"/>
+          <!-- карман-кенгуру -->
+          <path class="tee thin" d="M96,264 L104,212 L216,212 L224,264"/>
+
+          <g class="dim">
+            <line x1="112" y1="88"  x2="112" y2="286" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+            <line x1="92"  y1="162" x2="228" y2="162" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+            <line x1="216" y1="74"  x2="248" y2="82"  marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+            <line x1="264" y1="78"  x2="312" y2="188" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+          </g>
+          <g class="lab">
+            <circle cx="112" cy="120" r="15"/><text x="112" y="120">A</text>
+            <circle cx="160" cy="162" r="15"/><text x="160" y="162">B</text>
+            <circle cx="248" cy="52"  r="15"/><text x="248" y="52">C</text>
+            <circle cx="288" cy="133" r="15"/><text x="288" y="133">D</text>
+          </g>
+        </svg>
+        <figcaption class="mono">Замеры по изделию, разложенному на плоскости</figcaption>
+      </figure>
+
+      <div class="tablewrap" data-sizetable="hoodie"></div>
+
+    </div>
+
+    <div class="tablewrap" id="size-suit" data-panel="suit" data-sizetable="suit" hidden></div>
+
+    <div class="tablewrap" id="size-pants" data-panel="pants" data-sizetable="pants" hidden></div>
+
+    <p class="note">Замеры снимаются с изделия, разложенного на плоскости. Погрешность 1–2 см — норма для трикотажа. Пояс на штанах — резинка, обхват указан в спокойном состоянии.</p>
+  </section>
+
+  <section class="orderband" id="order">
+    <div class="wrap">
+      <div class="section__head">
+        <h2>Как заказать</h2>
+        <span class="mono">3 шага</span>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step__n">01</span>
+          <h3>Пишете в Telegram</h3>
+          <p>Модель, размер, город. Сомневаетесь в размере — назовите рост и обычный размер футболки, подскажем.</p>
+        </div>
+        <div class="step">
+          <span class="step__n">02</span>
+          <h3>Подтверждаем наличие</h3>
+          <p>Проверяем остаток, считаем доставку. Отвечаем в течение дня.</p>
+        </div>
+        <div class="step">
+          <span class="step__n">03</span>
+          <h3>Оплата и отправка</h3>
+          <p>Оплата переводом, отправка на следующий день. Трек-номер приходит в тот же чат.</p>
+        </div>
+      </div>
+      <div class="orderband__cta">
+        <a class="btn" href="#">Написать в Telegram</a>
+        <span class="mono" style="color:var(--band-soft)">Заполнить: ссылка на телеграм</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="faq">
+    <div class="section__head">
+      <h2>Вопросы</h2>
+      <span class="mono">Коротко</span>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Как понять свой размер?</summary>
+        <p>Сверьтесь с таблицей выше — она в сантиметрах по изделию, а не по фигуре. Если между двумя размерами, берите больший: посадка оверсайз.</p>
+      </details>
+      <details>
+        <summary>Сколько идёт доставка?</summary>
+        <p>Заполнить: сроки по России, служба доставки, стоимость, порог бесплатной доставки.</p>
+      </details>
+      <details>
+        <summary>Можно ли вернуть или обменять?</summary>
+        <p>Заполнить: условия обмена по размеру, срок возврата, кто платит за пересылку.</p>
+      </details>
+      <details>
+        <summary>Как ухаживать за вещами?</summary>
+        <p>Стирка при 30°, без отбеливателя, принт не гладить с лицевой стороны. Плотный трикотаж сушить горизонтально.</p>
+      </details>
+      <details>
+        <summary>Нет моего размера — что делать?</summary>
+        <p>Напишите в Telegram, поставим в лист ожидания и сообщим, когда придёт партия.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Как носят: фото покупателей из js/gallery.js -->
+  <section class="section wrap" id="worn">
+    <div class="section__head">
+      <h2>#ВАШИ ФОТО</h2>
+      <span class="mono">Как носят</span>
+    </div>
+    <div class="worn__top">
+      <p class="worn__lede">Присылайте снимки в наших вещах — публикуем здесь с вашим ником. Отмечать бренд не обязательно, но приятно.</p>
+      <a class="worn__send" href="photos.html"><span aria-hidden="true">+</span>Прислать фото</a>
+    </div>
+    <div class="gallery" id="gallery"></div>
+    <p class="mono gallery__empty" id="gallery-empty" hidden>Пока пусто — ваш снимок может стать первым.</p>
+  </section>
+
+</main>
+
+<section class="slogan">
+  <div class="wrap">
+    <p>Классика в сердце.<br>Улица в крови.<br><em>Стиль — в тебе.</em></p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <div class="foot__brand"><span class="mark mark--lg" aria-hidden="true"></span>CLASSIXTREET<em>.</em></div>
+        <p class="mono" style="color:var(--band-soft);margin:.7rem 0 0">Челябинск</p>
+      </div>
+      <div class="foot__links">
+        <a href="#">Telegram</a>
+        <a href="#">ВКонтакте</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+    <p class="foot__legal">Заполнить перед публикацией: ИП / самозанятость, ИНН, публичная оферта, политика обработки персональных данных.</p>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/news.js"></script>
+<script src="js/gallery.js"></script>
+<script src="js/app.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>

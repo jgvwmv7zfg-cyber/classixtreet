@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="description" content="Каталог CLASSIXTREET внутри Telegram.">
+<title>CLASSIXTREET</title>
+<link rel="icon" href="img/favicon.png">
+
+<!-- ============================================================
+     МИНИ-ПРИЛОЖЕНИЕ TELEGRAM
+     ------------------------------------------------------------
+     Эта страница открывается кнопкой в боте, внутри Telegram.
+     Товары берутся из js/products.js — того же файла, что и на
+     сайте. Отдельно ассортимент здесь НЕ правится.
+
+     Открывается только по адресу https:// — с файла на диске
+     Telegram страницу не запустит. Адрес вписывается в
+     bot/bot.py, настройка WEBAPP_URL.
+     ============================================================ -->
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/tgapp.css">
+</head>
+<body data-page="app">
+
+<main class="tgapp">
+
+  <!-- ---------- ЭКРАН 1: КАТАЛОГ ----------
+       id-шники здесь те же, что ждёт js/app.js: карточки,
+       фильтры и счётчик собираются существующим кодом сайта. -->
+  <section class="tgview" id="view-catalog" data-view="catalog">
+
+    <div class="tghead">
+      <h1 class="tghead__title">Каталог</h1>
+      <p class="mono tghead__sub">Нажмите на вещь — размеры, состав, фото со спины</p>
+    </div>
+
+    <div class="filterbar">
+      <div class="filterbar__row">
+        <span class="filterbar__label">Позиции</span>
+        <div class="filters" id="filter-cat" role="group" aria-label="Категория"></div>
+      </div>
+      <div class="filterbar__row">
+        <span class="filterbar__label">Коллекции</span>
+        <div class="filters" id="filter-col" role="group" aria-label="Коллекция"></div>
+      </div>
+    </div>
+
+    <div class="results">
+      <span class="results__count" id="count" aria-live="polite"></span>
+      <button type="button" class="results__reset" id="reset" hidden>Сбросить</button>
+    </div>
+
+    <div class="grid" id="grid-all"></div>
+    <p class="empty" id="empty" hidden>В этой коллекции пока нет таких вещей</p>
+
+  </section>
+
+  <!-- ---------- ЭКРАН 2: РАЗМЕРЫ ----------
+       Таблицы заполняет js/app.js по атрибуту data-sizetable,
+       переключение вкладок — по data-size / data-panel. -->
+  <section class="tgview" id="view-sizes" data-view="sizes" hidden>
+
+    <div class="tghead">
+      <h1 class="tghead__title">Размеры</h1>
+      <p class="mono tghead__sub">Замеры по изделию, разложенному на плоскости</p>
+    </div>
+
+    <div class="filters tgtabs" id="sizetabs" role="group" aria-label="Тип изделия">
+      <button type="button" data-size="tee"    aria-controls="size-tee"    aria-pressed="true">Футболки</button>
+      <button type="button" data-size="hoodie" aria-controls="size-hoodie" aria-pressed="false">Худи и зип</button>
+      <button type="button" data-size="suit"   aria-controls="size-suit"   aria-pressed="false">Костюмы</button>
+      <button type="button" data-size="pants"  aria-controls="size-pants"  aria-pressed="false">Штаны</button>
+    </div>
+
+    <div class="tablewrap" id="size-tee"    data-panel="tee"    data-sizetable="tee"></div>
+    <div class="tablewrap" id="size-hoodie" data-panel="hoodie" data-sizetable="hoodie" hidden></div>
+    <div class="tablewrap" id="size-suit"   data-panel="suit"   data-sizetable="suit" hidden></div>
+    <div class="tablewrap" id="size-pants"  data-panel="pants"  data-sizetable="pants" hidden></div>
+
+    <p class="note">Погрешность 1–2 см — норма для трикотажа. Пояс на штанах — резинка, обхват указан в спокойном состоянии. Сомневаетесь между двумя размерами — напишите нам, подскажем.</p>
+
+  </section>
+
+  <!-- ---------- ЭКРАН 3: КОРЗИНА ----------
+       Содержимое рисует js/tgapp.js из той же корзины, что и на
+       сайте (js/cart.js, localStorage). -->
+  <section class="tgview" id="view-cart" data-view="cart" hidden>
+
+    <div class="tghead">
+      <h1 class="tghead__title">Корзина</h1>
+    </div>
+
+    <div id="tg-cart"></div>
+
+    <div class="tgsum" id="tg-cart-total" hidden></div>
+
+    <p class="note" id="tg-cart-note" hidden>Доставку посчитаем после того, как подтвердим наличие. Оплата — переводом по реквизитам, их пришлём в ответ.</p>
+
+  </section>
+
+  <!-- ---------- ЭКРАН 4: ОФОРМЛЕНИЕ ----------
+       Поля повторяют checkout.html: заказ с сайта и заказ из
+       приложения приходят в одном и том же виде. -->
+  <section class="tgview" id="view-order" data-view="order" hidden>
+
+    <div class="tghead">
+      <h1 class="tghead__title">Оформление</h1>
+      <p class="mono tghead__sub">Заказ придёт нам в этот же чат</p>
+    </div>
+
+    <form class="tgform" id="tg-order-form" novalidate>
+
+      <fieldset class="field">
+        <label class="mono" for="tf-firstname">Имя</label>
+        <input id="tf-firstname" name="firstname" type="text" autocomplete="given-name" required>
+      </fieldset>
+
+      <fieldset class="field">
+        <label class="mono" for="tf-lastname">Фамилия</label>
+        <input id="tf-lastname" name="lastname" type="text" autocomplete="family-name" required>
+      </fieldset>
+
+      <fieldset class="field">
+        <label class="mono" for="tf-phone">Номер телефона</label>
+        <input id="tf-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 ___ ___-__-__" required>
+      </fieldset>
+
+      <fieldset class="field">
+        <label class="mono" for="tf-city">Город</label>
+        <input id="tf-city" name="city" type="text" autocomplete="address-level2" required>
+      </fieldset>
+
+      <fieldset class="field">
+        <label class="mono" for="tf-contact">Telegram или ссылка на соцсеть</label>
+        <input id="tf-contact" name="contact" type="text" placeholder="@nickname" required>
+        <span class="field__note mono">Сюда напишем о заказе и пришлём реквизиты</span>
+      </fieldset>
+
+      <fieldset class="field">
+        <span class="mono field__label">Доставка</span>
+        <div class="delivery" id="tg-delivery"></div>
+      </fieldset>
+
+      <fieldset class="field">
+        <label class="mono" for="tf-address">Адрес или пункт выдачи</label>
+        <input id="tf-address" name="address" type="text" autocomplete="street-address">
+        <span class="field__note mono">Можно просто название пункта — уточним в переписке</span>
+      </fieldset>
+
+      <fieldset class="field">
+        <label class="mono" for="tf-note">Комментарий</label>
+        <textarea id="tf-note" name="note" rows="3" placeholder="Что-то, что нам стоит знать"></textarea>
+      </fieldset>
+
+      <label class="agree">
+        <input type="checkbox" id="tf-agree" required>
+        <span>Согласен на обработку персональных данных</span>
+      </label>
+
+      <p class="formerror" id="tg-form-error" hidden></p>
+
+      <!-- Кнопка нужна для запасного режима: внутри Telegram
+           заказ отправляется большой синей кнопкой снизу. -->
+      <button type="submit" class="btn btn--red btn--big tgform__submit" id="tg-submit">Отправить заказ</button>
+
+      <!-- Если отправить данные боту нельзя (приложение открыто
+           не с кнопки клавиатуры) — показываем готовый текст. -->
+      <div class="fallback" id="tg-fallback" hidden>
+        <p class="mono">Скопируйте текст заказа и отправьте нам сообщением:</p>
+        <textarea id="tg-fallback-text" rows="12" readonly></textarea>
+        <button type="button" class="btn btn--ghost" id="tg-copy">Скопировать</button>
+      </div>
+
+    </form>
+
+  </section>
+
+</main>
+
+<!-- ---------- НИЖНЯЯ ПАНЕЛЬ ---------- -->
+<nav class="tgnav" aria-label="Разделы">
+  <button type="button" data-go="catalog" aria-pressed="true">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+    <span>Каталог</span>
+  </button>
+  <button type="button" data-go="sizes" aria-pressed="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18v8H3zM7 8v4M11 8v4M15 8v4M19 8v4"/></svg>
+    <span>Размеры</span>
+  </button>
+  <button type="button" data-go="cart" aria-pressed="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16l-1.5 11.5a2 2 0 0 1-2 1.5H7.5a2 2 0 0 1-2-1.5L4 6z"/><path d="M9 6V4.5a3 3 0 0 1 6 0V6"/></svg>
+    <span>Корзина</span>
+    <b class="tgnav__badge" id="tgnav-badge" hidden>0</b>
+  </button>
+</nav>
+
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/tgapp.js"></script>
+</body>
+</html>

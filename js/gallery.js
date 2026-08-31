@@ -18,5 +18,6 @@
 
 var GALLERY = [
 
+  { photo: 'img/gallery/usr-260831-2.jpg', author: '@glorxx1' },
   /* НОВЫЕ ФОТО ДОБАВЛЯЮТСЯ СЮДА БОТОМ */
 ];

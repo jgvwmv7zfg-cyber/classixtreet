@@ -516,25 +516,39 @@
     fallbackOrder(data);
   }
 
-  /* Запасной путь: открыть чат с готовым текстом, а если и это
-     невозможно — показать текст для копирования. */
+  /* Запасной путь: отправить заказ на сервер бота обычным запросом.
+     Раньше здесь открывался чат с готовым текстом — покупателю
+     приходилось самому нажимать «отправить». Теперь этого нет:
+     заявка уходит вам сама, а текст для копирования показывается
+     только если не сработало и это. */
   function fallbackOrder(data){
     var text = buildOrderText(data);   /* js/cart.js */
 
-    if (tg && typeof tg.openTelegramLink === 'function' && typeof TELEGRAM !== 'undefined' && TELEGRAM){
-      tg.openTelegramLink('https://t.me/' + TELEGRAM + '?text=' + encodeURIComponent(text));
-      orderSent();
-      return;
-    }
-    if (!tg && sendOrder(text)){       /* js/cart.js — обычный браузер */
-      orderSent();
-      return;
-    }
+    if (sending) return;
+    sending = true;
+    if (tg && tg.MainButton) tg.MainButton.showProgress(true);
+    errBox.className = 'formerror';
+    errBox.textContent = 'Отправляем заказ. Это может занять до минуты.';
+    errBox.hidden = false;
 
-    haptic('err');
-    fbText.value = text;
-    fallback.hidden = false;
-    fallback.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    sendOrder(data).then(function(res){       /* js/cart.js */
+      errBox.className = 'formerror formerror--ok';
+      errBox.textContent = 'Заказ ' + res.no + ' принят.';
+      orderSent();
+    }).catch(function(err){
+      console.error('Заказ не отправился:', err);
+      haptic('err');
+      errBox.className = 'formerror';
+      errBox.textContent = 'Не получилось отправить заказ автоматически. '
+        + 'Скопируйте текст ниже и пришлите его нам сообщением.';
+      errBox.hidden = false;
+      fbText.value = text;
+      fallback.hidden = false;
+      fallback.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }).finally(function(){
+      sending = false;
+      if (tg && tg.MainButton) tg.MainButton.hideProgress();
+    });
   }
 
   copyBtn.addEventListener('click', function(){

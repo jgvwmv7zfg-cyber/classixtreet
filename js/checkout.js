@@ -17,6 +17,7 @@
   var copyBtn  = document.getElementById('copy-btn');
 
   /* ---------- способы доставки ---------- */
+  delBox.innerHTML = ''; // очистить перед заполнением
   DELIVERY.forEach(function(d, i){
     var lab = document.createElement('label');
     lab.className = 'delivery__opt';
@@ -192,10 +193,13 @@
     if (e.target.name === 'delivery') updateMap();
   });
 
-  /* ---------- подсказка под кнопкой ---------- */
-  hintBox.textContent = (typeof TELEGRAM !== 'undefined' && TELEGRAM)
-    ? 'Откроется чат с готовым сообщением — останется нажать «Отправить»'
-    : 'Заполнить: ник в Telegram в файле js/products.js';
+  /* ---------- подсказка под кнопкой ----------
+     Раньше здесь было «откроется чат с готовым сообщением»:
+     покупателю приходилось отправлять заказ самому. Теперь заказ
+     уходит сразу нам, копировать и пересылать ничего не нужно. */
+  hintBox.textContent = ORDER_API
+    ? 'Заказ уйдёт нам сразу — ничего пересылать не нужно'
+    : 'Отправка не настроена: заполните ORDER_API в файле js/cart.js';
 
   /* ---------- отправка ---------- */
   form.addEventListener('submit', function(e){
@@ -229,20 +233,41 @@
       return;
     }
 
+    /* Отправляем и ждём ответа сервера. Пока ждём — блокируем
+       кнопку, иначе покупатель нажмёт ещё раз и придёт два заказа.
+       Сервер на бесплатном тарифе может просыпаться до минуты,
+       поэтому честно пишем, что идёт отправка. */
+    var btn = form.querySelector('button[type="submit"]');
+    var btnText = btn ? btn.textContent : '';
+    if (btn){ btn.disabled = true; btn.textContent = 'Отправляем…'; }
+
+    errBox.className = 'formerror';
+    errBox.textContent = 'Отправляем заказ. Это может занять до минуты — не закрывайте страницу.';
+    errBox.hidden = false;
+
     var text = buildOrderText(data);
 
-    if (sendOrder(text)){
+    sendOrder(data).then(function(res){
       form.reset();
       cartClear();
       renderCheckout();
-      errBox.textContent = 'Заказ отправлен. Ответим в течение дня.';
       errBox.className = 'formerror formerror--ok';
+      errBox.textContent = 'Заказ ' + res.no + ' принят. Мы напишем вам в течение дня.';
       errBox.hidden = false;
-    } else {
+    }).catch(function(err){
+      /* Заказ не дошёл. Не делаем вид, что всё хорошо: показываем
+         готовый текст, чтобы человек мог отправить его сам. */
+      console.error('Заказ не отправился:', err);
+      errBox.className = 'formerror';
+      errBox.textContent = 'Не получилось отправить заказ автоматически. '
+        + 'Скопируйте текст ниже и пришлите его нам в Telegram — оформим вручную.';
+      errBox.hidden = false;
       fbText.value = text;
       fallback.hidden = false;
       fallback.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    }
+    }).finally(function(){
+      if (btn){ btn.disabled = false; btn.textContent = btnText; }
+    });
   });
 
   copyBtn.addEventListener('click', function(){

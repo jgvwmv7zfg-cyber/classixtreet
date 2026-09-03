@@ -227,7 +227,7 @@
         <div class="step">
           <span class="step__n">03</span>
           <h3>Оплата и отправка</h3>
-          <p>Оплата переводом, отправка на следующий день. Трек-номер приходит в тот же чат.</p>
+          <p>Картой или Долями на четыре платежа. Передаём в «Почту России» или СДЭК, трек-номер приходит в тот же чат.</p>
         </div>
       </div>
       <div class="orderband__cta">
@@ -249,11 +249,15 @@
       </details>
       <details>
         <summary>Сколько идёт доставка?</summary>
-        <p>Заполнить: сроки по России, служба доставки, стоимость, порог бесплатной доставки.</p>
+        <p>Отправляем «Почтой России» или СДЭК. Собираем и передаём в службу от 1 до 7 рабочих дней, сама доставка занимает от 3 до 5 дней. Доставку оплачивает покупатель.</p>
+      </details>
+      <details>
+        <summary>Чем можно оплатить?</summary>
+        <p>Картой Visa или Mastercard — данные вводятся на защищённой странице Т-Банка, к нам они не попадают. Есть оплата Долями: сумма делится на 4 части, первый платёж сразу, остальные раз в две недели.</p>
       </details>
       <details>
         <summary>Можно ли вернуть или обменять?</summary>
-        <p>Заполнить: условия обмена по размеру, срок возврата, кто платит за пересылку.</p>
+        <p>Да, в течение 7 дней после получения. Напишите в Telegram — оформим обмен на другую вещь или возврат. Пересылку в этом случае оплачивает покупатель, но если это брак производства, доставку берём на себя. Деньги приходят в течение 1–30 рабочих дней после того, как мы получим товар. Вещь со следами носки вернуть не получится.</p>
       </details>
       <details>
         <summary>Как ухаживать за вещами?</summary>
@@ -296,19 +300,38 @@
         <p class="mono" style="color:var(--band-soft);margin:.7rem 0 0">Челябинск</p>
       </div>
       <div class="foot__links">
-        <a href="#">Telegram</a>
-        <a href="#">ВКонтакте</a>
-        <a href="#">Instagram</a>
+        <a href="https://t.me/classixtreet" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://vk.com/clctt" target="_blank" rel="noopener">ВКонтакте</a>
+        <a href="https://instagram.com/cxtt_off" target="_blank" rel="noopener">Instagram</a>
       </div>
     </div>
-    <p class="foot__legal">Заполнить перед публикацией: ИП / самозанятость, ИНН, публичная оферта, политика обработки персональных данных.</p>
+    <p class="foot__legal">ИП Кульбеда Валерий Вячеславович, ОГРНИП 325745600130807, ИНН 583680299106</p>
+    <div class="foot__docs">
+      <button class="foot__doc" id="btn-offer">Публичная оферта</button>
+      <button class="foot__doc" id="btn-privacy">Политика конфиденциальности</button>
+      <button class="foot__doc" id="btn-payment">Оплата и доставка</button>
+      <button class="foot__doc" id="btn-returns">Возврат и обмен</button>
+    </div>
   </div>
 </footer>
+
+<div class="offer-modal" id="offer-modal" hidden>
+  <div class="offer-content">
+    <div class="offer-header">
+      <h2>Публичная оферта</h2>
+      <button class="offer-close" id="offer-close" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="offer-body" id="offer-body"></div>
+  </div>
+</div>
 
 <script src="js/products.js"></script>
 <script src="js/news.js"></script>
 <script src="js/gallery.js"></script>
 <script src="js/app.js"></script>
 <script src="js/cart.js"></script>
+<script src="js/offer.js"></script>
 </body>
 </html>

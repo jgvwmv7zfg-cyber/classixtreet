@@ -1095,3 +1095,53 @@ body.is-locked{overflow:hidden}
 }
 .howto b{font-family:var(--f-display);font-weight:800;font-size:.98rem;text-transform:uppercase;line-height:1.15}
 .howto span{color:var(--ink-soft);font-size:.94rem;line-height:1.5}
+
+/* документы в подвале */
+.foot__docs{margin:1rem 0 0;display:flex;flex-wrap:wrap;gap:.6rem}
+.foot__doc{
+  font-family:var(--f-body);font-size:.88rem;color:var(--band-soft);
+  background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;
+  transition:color .16s ease;
+}
+.foot__doc:hover{color:var(--band-fg)}
+
+/* модальное окно оферты */
+.offer-modal{
+  position:fixed;inset:0;z-index:99999;
+  background:rgba(11,11,12,.85);
+  display:flex;align-items:center;justify-content:center;
+  padding:1rem;
+}
+.offer-modal[hidden]{display:none}
+.offer-content{
+  background:var(--paper);
+  max-width:52rem;width:100%;max-height:90vh;
+  border:2px solid var(--rule);
+  display:flex;flex-direction:column;
+}
+.offer-header{
+  padding:1.2rem 1.5rem;border-bottom:2px solid var(--rule);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.offer-header h2{
+  font-family:var(--f-display);font-weight:900;font-size:1.3rem;
+  text-transform:uppercase;letter-spacing:-.02em;margin:0;
+}
+.offer-close{
+  background:none;border:0;cursor:pointer;
+  width:32px;height:32px;display:grid;place-items:center;
+  color:var(--ink-soft);transition:color .16s ease;
+}
+.offer-close:hover{color:var(--ink)}
+.offer-close svg{width:18px;height:18px;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.offer-body{
+  padding:1.5rem;overflow-y:auto;
+  font-size:.94rem;line-height:1.65;color:var(--ink-soft);
+}
+.offer-body h3{
+  font-family:var(--f-display);font-weight:800;font-size:1.05rem;
+  text-transform:uppercase;letter-spacing:-.01em;margin:2rem 0 .8rem;color:var(--ink);
+}
+.offer-body h3:first-child{margin-top:0}
+.offer-body p{margin:.8rem 0}
+.offer-body strong{color:var(--ink);font-weight:600}

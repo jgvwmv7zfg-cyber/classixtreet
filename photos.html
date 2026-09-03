@@ -111,18 +111,37 @@
         <p class="mono" style="color:var(--band-soft);margin:.7rem 0 0">Челябинск</p>
       </div>
       <div class="foot__links">
-        <a href="#">Telegram</a>
-        <a href="#">ВКонтакте</a>
-        <a href="#">Instagram</a>
+        <a href="https://t.me/classixtreet" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://vk.com/clctt" target="_blank" rel="noopener">ВКонтакте</a>
+        <a href="https://instagram.com/cxtt_off" target="_blank" rel="noopener">Instagram</a>
       </div>
     </div>
-    <p class="foot__legal">Заполнить перед публикацией: ИП / самозанятость, ИНН, публичная оферта, политика обработки персональных данных.</p>
+    <p class="foot__legal">ИП Кульбеда Валерий Вячеславович, ОГРНИП 325745600130807, ИНН 583680299106</p>
+    <div class="foot__docs">
+      <button class="foot__doc" id="btn-offer">Публичная оферта</button>
+      <button class="foot__doc" id="btn-privacy">Политика конфиденциальности</button>
+      <button class="foot__doc" id="btn-payment">Оплата и доставка</button>
+      <button class="foot__doc" id="btn-returns">Возврат и обмен</button>
+    </div>
   </div>
 </footer>
+
+<div class="offer-modal" id="offer-modal" hidden>
+  <div class="offer-content">
+    <div class="offer-header">
+      <h2>Публичная оферта</h2>
+      <button class="offer-close" id="offer-close" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="offer-body" id="offer-body"></div>
+  </div>
+</div>
 
 <script src="js/products.js"></script>
 <script src="js/app.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/upload.js"></script>
+<script src="js/offer.js"></script>
 </body>
 </html>

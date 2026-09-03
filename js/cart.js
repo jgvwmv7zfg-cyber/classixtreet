@@ -2,7 +2,7 @@
    CLASSIXTREET — КОРЗИНА И ЗАКАЗ
    ------------------------------------------------------------
    Корзина хранится в браузере покупателя (localStorage), сервер
-   не нужен. Заказ уходит вам в Telegram готовым сообщением.
+   не нужен. Заказ уходит вам в Telegram сам, через бота.
 
    Ник для Telegram задаётся в js/products.js — переменная TELEGRAM.
    ============================================================ */
@@ -279,21 +279,72 @@ function buildOrderText(form){
   return lines.join('\n');
 }
 
-/* Куда отправить заказ. Позже сюда встанет эквайринг —
-   менять нужно будет только эту функцию. */
-function sendOrder(text){
-  if (typeof TELEGRAM === 'undefined' || !TELEGRAM) return false;
-  var link = 'https://t.me/' + TELEGRAM + '?text=' + encodeURIComponent(text);
+/* ============================================================
+   ОТПРАВКА ЗАКАЗА
+   ------------------------------------------------------------
+   Заказ уходит на сервер бота, а бот кладёт его вам в Telegram.
+   Покупатель ничего никуда не пересылает и ничего не копирует.
 
-  /* Внутри мини-приложения Telegram window.open ведёт себя
-     непредсказуемо — там для ссылок есть свой метод. */
-  var tg = window.Telegram && window.Telegram.WebApp;
-  if (tg && typeof tg.openTelegramLink === 'function'){
-    tg.openTelegramLink(link);
-    return true;
+   Один адрес на весь сайт — меняете здесь, меняется везде.
+   Пустая строка выключает отправку: тогда останется только
+   запасной путь с текстом для копирования.
+
+   ВАЖНО про бесплатный Render: если на сервер долго никто не
+   заходил, он засыпает и первый запрос будит его 30–60 секунд.
+   Поэтому ждём до полутора минут и всё это время показываем
+   покупателю, что идёт отправка. Обрывать раньше нельзя —
+   заказ потеряется.
+   ============================================================ */
+var ORDER_API = 'https://classixtreet-bot.onrender.com/api/order';
+var ORDER_TIMEOUT = 90000;
+
+/* Заказ одной структурой. Ровно в таком виде его понимает бот —
+   и с сайта, и из мини-приложения Telegram. */
+function buildOrderPayload(form){
+  return {
+    v: 1,
+    no: orderNumber(),
+    items: cartLoad().map(function(it){
+      return {
+        id: it.id, name: it.name, color: it.color || '',
+        size: it.size || '', qty: it.qty, price: it.price || 0
+      };
+    }),
+    total: cartTotal(),
+    form: form || {}
+  };
+}
+
+/* Отправляет заказ и ЧЕСТНО сообщает, дошёл ли он.
+   Возвращает промис: сбылся — заказ у вас, отказал — нет.
+   Раньше здесь стояло «всегда считать, что дошло»: покупатель
+   видел «заказ отправлен» даже когда сервер спал, и заказ
+   пропадал молча. */
+function sendOrder(form){
+  var order = buildOrderPayload(form);
+
+  if (!ORDER_API){
+    return Promise.reject(new Error('адрес сервера не задан'));
   }
-  window.open(link, '_blank', 'noopener');
-  return true;
+
+  var ctrl = (typeof AbortController === 'function') ? new AbortController() : null;
+  var timer = setTimeout(function(){ if (ctrl) ctrl.abort(); }, ORDER_TIMEOUT);
+
+  return fetch(ORDER_API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(order),
+    signal: ctrl ? ctrl.signal : undefined
+  })
+  .then(function(res){
+    if (!res.ok) throw new Error('сервер ответил ' + res.status);
+    return res.json();
+  })
+  .then(function(data){
+    if (!data || !data.ok) throw new Error('сервер не принял заказ');
+    return { no: data.no || order.no };
+  })
+  .finally(function(){ clearTimeout(timer); });
 }
 
 /* ---------- запуск ---------- */

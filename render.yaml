@@ -1,0 +1,25 @@
+# ============================================================
+# Настройка для Render. Файл лежит в корне репозитория, Render
+# читает его сам — руками в панели ничего настраивать не нужно,
+# кроме одного: переменной BOT_TOKEN (см. ниже).
+# ============================================================
+services:
+  - type: web
+    name: classixtreet-bot
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r bot/requirements.txt"
+    startCommand: "python bot/bot_webhook.py"
+    healthCheckPath: /
+    envVars:
+      # Токен НЕ хранится в репозитории. sync: false означает,
+      # что Render спросит его у вас один раз при создании
+      # сервиса и запомнит у себя.
+      - key: BOT_TOKEN
+        sync: false
+      - key: ADMIN_CHAT_ID
+        value: "1429396337"
+      - key: WEBAPP_URL
+        value: "https://classixtreet.store/app.html"
+      - key: PYTHON_VERSION
+        value: "3.12.0"
